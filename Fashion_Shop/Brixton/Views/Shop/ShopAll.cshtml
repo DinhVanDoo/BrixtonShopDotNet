@@ -1,0 +1,86 @@
+﻿@{
+    ViewData["Title"] = "Shopp All";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+@using Brixton.Models
+@using X.PagedList
+
+@model IPagedList<ProductModel>
+
+    
+
+<link href="css/List.css" rel="stylesheet">
+<style>
+    .Form{
+        margin:auto;
+        text-align: center;
+    }
+</style>
+<div style=" margin: auto ; width: 200px">
+    @using (Html.BeginForm("ShopAll", "Shop", FormMethod.Get, new { Name = "Form", id = "Search" }))
+    {
+        <input type="text" autocomplete="off" name="key" id="input_search" class="input_search" placeholder="Search" value="@ViewBag.key">
+        <input type="hidden" name="caid" value="@ViewBag.caid" />
+}
+</div>
+
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var inputField = document.querySelector('input_search');
+
+        inputField.addEventListener("keypress", function (event) {
+            if (event.key === "Enter") {
+                event.preventDefault(); 
+                document.getElementById("Search").submit();
+            }
+        });
+    });
+</script>
+<div style=" width: 700px ;display: flex; justify-content: center; margin: auto; text-align: center">
+    <div class="categories" style="width: 100%; justify-content: center; text-align: center; margin: 10px auto; display: flex">
+
+        <ul id="myUL" style="margin: auto">
+            @{
+                foreach (CategoryModel listCa in ViewBag.listCa)
+                {
+                    <li style="margin: 0 5px"><a style=" padding:5px;margin-top 10px;border-radius: 10px;font-family: 'MuseoModerno' ;@(ViewBag.caid == listCa.CaId ? "background-color : black; color: white" : "")" href="@Url.Action("ShopAll", new {listCa.CaId , ViewBag.key })">@listCa.CaName</a></li>
+                }
+            }
+
+
+        </ul>
+    </div>
+</div>
+<div class="product">
+    @{
+        foreach (ProductModel list in Model)
+        {
+            <div class="card">
+                <img src="/@list.ProImg" style="width:100% ">
+                <a class="title" style="padding: 1px 1px;" href="/Product/Detail/@list.ProId"> @list.ProName</a>
+                <p> @list.ProPrice $</p>
+                <p><button class="buy"><a href="/Shop/Detail/@list.ProId" style="color: white">View Detail</a></button></p>
+            </div>
+
+
+        }
+    }
+</div>
+
+<br />
+
+<div class="check" style="display:">
+    <div class="pagination" style="margin: auto; justify-content: center; margin-top: 30px;">
+        <a href="@Url.Action("ShopAll", new { page = Model.PageNumber -1,key = ViewBag.key, id= ViewBag.id })">&laquo;</a>
+        @for (int i = 1; i <= Model.PageCount; i++)
+        {
+            <a class="@(i == Model.PageNumber ? "active" : "")" href="@Url.Action("ShopAll", new { page = i , key = ViewBag.key, id= ViewBag.id})">@i</a>
+        }
+        <a href="@Url.Action("ShopAll", new { page = Model.PageNumber >= Model.PageCount? Model.PageCount : Model.PageNumber, key = ViewBag.key, id= ViewBag.id})">&raquo;</a>
+    </div>
+</div>
+
+

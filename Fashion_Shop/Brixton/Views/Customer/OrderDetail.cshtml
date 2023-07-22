@@ -1,0 +1,66 @@
+﻿
+@{
+    ViewData["Title"] = "OrderDetail";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+@model List<Brixton.Models.OrderDetailHe161048>
+@section historyorder{
+    <link href="~/css/historyorder.css" rel="stylesheet" />
+}
+@{
+    Brixton.Models.PRJ301_SE1705Context con = new Brixton.Models.PRJ301_SE1705Context();
+    var list = con.ProductHe161048s.ToList();
+}
+
+<div>
+    <h2 style="text-align: center; margin-top: 20px"> Order</h2>
+
+    <div class="table_section" style="width: 80%; margin: auto">
+        <table>
+
+            <thead>
+                <tr>
+                    <th>OrID</th>
+                    <th>ProID</th>
+                    <th style="width:300px">Quantity</th>
+                    <th style="">Price</th>
+                </tr>
+            </thead>
+            `
+
+            <tbody>
+                @foreach (var i in Model)
+                {
+                    <tr>
+                        <td style="width: 30px">@i.OrId</td>
+                        @foreach(var e in @list)
+                        {
+                            @if(e.ProId == i.ProId)
+                            {
+                                <td style="width:700px">
+                                <div style="display: flex">
+                                        <div><img src="/@e.ProImg" style="width:80px; margin-right:10px" /></div>
+                                        <div>
+                                            <p style ="text-align:left; font-family: Roboto; font-weight : 600">@e.ProName</p>
+                                            <p style="text-align:left">@e.ProPrice $</p></div>
+                                </div>
+                                
+                                    
+                            </td> 
+
+                            }
+                           
+                        }
+                        
+                        <td style="width:300px">@i.Quantity</td>
+                        <td style="width:300px">@(i.Price* i.Quantity)</td>
+                    </tr>
+                } 
+
+            </tbody>
+
+        </table>
+    </div>
+</div>
+

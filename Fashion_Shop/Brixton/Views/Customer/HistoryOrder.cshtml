@@ -1,0 +1,58 @@
+﻿
+@{
+    ViewData["Title"] = "HistoryOrder";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+@model List<Brixton.Models.OrderHe161048>
+@section historyorder{
+    <link href="~/css/historyorder.css" rel="stylesheet" />
+}
+
+<div>
+    <h2 style="text-align: center; margin-top: 20px">Customer Order</h2>
+
+    <div class="table_section" style="width: 90%; margin: auto">
+        <table>
+
+            <thead>
+                <tr>
+                    <th>OrID</th>
+                    <th>Date</th>
+                    <th style="width:300px">Name</th>
+                    <th style="">Phone</th>
+                    <th style="">Address</th>
+                    <th>Total_Money</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            `
+
+            <tbody>
+                @foreach(var i in Model)
+                {
+                    <tr>
+                        <td>@i.OrId</td>
+                        <td>@i.OrDate.ToString("dd/MM/yyyy")</td>
+                        @{
+                            var acc = ViewBag.Acc as Brixton.Models.AccountModel;
+                            string? name = acc.UserName;
+                            string? phone = acc.UserPhone;
+                            string? address = acc.UserAddress;
+                        }
+                        
+                        <td style="width:300px">@name</td>
+                        <td style="width:300px">@phone</td>
+                        <td style="width:300px">@address</td> 
+                        <td>@i.TotalMoney</td>
+                        <td>
+                            <a href="@Url.Action("OrderDetail","Customer", new{OrId = @i.OrId})">View detail</a>
+                        </td>
+
+                    </tr>
+                }
+                
+            </tbody>
+
+        </table>
+    </div>
+</div>

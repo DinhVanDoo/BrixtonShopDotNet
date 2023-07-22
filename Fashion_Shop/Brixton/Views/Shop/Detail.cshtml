@@ -1,0 +1,37 @@
+﻿@{
+    ViewData["Title"] = "Detail";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+
+@using Brixton.Models;
+@model ProductHe161048;
+@section detail{
+    <link href="~/css/productdetail.css" rel="stylesheet" />
+}
+
+<div class="row">
+    <div class="product">
+        <div class="product-img">
+            <img src="/@Model.ProImg" alt="">
+            <span class="tag">new</span>
+        </div>
+        <div class="product-listing">
+            <div class="content">
+                <h3 class="name" style="font-size: 40px">@Model.ProName</h3>
+                <p class="info">@Model.Ca.CaName</p>
+                <p class="info">@Model.ProDetail</p>
+                <p class="price">@Model.ProPrice</p>
+                <div class="btn-and-rating-box">
+
+                    <a href="/Cart/AddToCart?proId=@Model.ProId&quantity=1" style="color: white; background-color: black; padding: 10px; text-decoration: none; border-radius: 10px ">Add To Cart</a>
+
+
+
+                    <!--<button class="btn"><a href="addToCart?proId=${product.proId}&num=1" style="color: white">Add To Cart</a></button>-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

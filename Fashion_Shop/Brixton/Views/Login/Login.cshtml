@@ -1,0 +1,90 @@
+﻿@model Brixton.Models.AccountModel
+
+<!DOCTYPE html> 
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Login</title>
+        <link href="~/css/login.css" rel="stylesheet" />
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Alegreya&family=MuseoModerno:wght@200;300;400;500;600;800;900&family=Open+Sans:ital,wght@0,300;1,300&family=Oxygen:wght@300;400;700&display=swap" rel="stylesheet">
+   
+        <style>
+            input{
+            border-bottom: 3px solid black;
+            border-radius: 10px;x`
+            border-right: 1px solid black;
+            width: 80%
+            }
+
+        </style>
+    </head>
+
+
+    <body>
+    <a href="@Url.Action("Home","Home")" style="color: black; text-decoration: none">
+        
+        <h2 style="font-size: 55px; font-family: 'Lobster', cursive; text-decoration: none; color: black">Brixton:</h2>
+        </a>
+        
+        <div class="container">
+            <span>
+            @ViewBag.Error
+            </span>
+
+        <span>
+            @ViewBag.message
+        </span>
+        @using (Html.BeginForm("Login", "Login", FormMethod.Post))
+            {
+                <div class="row">
+                    <h2 style="text-align:center" >Login</h2>
+                    <div class="col">
+
+                       
+                    <div class="form-group">
+                        @Html.TextBoxFor(model => model.AccId, new { @class = "form-control", placeholder = "UserName" })
+                        <br/>
+                        <span>
+                            @Html.ValidationMessageFor(model => model.AccId, "", new { @class = "text-danger" })
+                        </span>
+                       
+                    </div>
+                    <div class="form-group">
+                        @Html.PasswordFor(model => model.AccPass, new { @class = "form-control", placeholder = "Password" })
+                        <br />
+                        <span>
+                            @Html.ValidationMessageFor(model => model.AccPass, "", new { @class = "text-danger" })
+                        </span>
+                        
+                    </div>
+
+                        <div class="group" style="margin: auto">
+                            <input style="" class="submit" type="submit" value="Login">
+                        </div>
+
+                    </div>  
+
+                </div>
+            }
+        </div>
+
+        <div class="bottom-container">
+            <div class="row">
+                <div class="col">
+                <a href="@Url.Action("Register", "Register")" style="color:rgb(0, 0, 0)" class="btn">Sign up</a>
+                </div>
+                <div class="col">
+                <a href="@Url.Action("ForgotPassword", "ForgotPassword")" style="color:rgb(0, 0, 0)" class="btn">Forgot password?</a>
+                </div>
+            </div>
+        </div>
+
+    </body>
+</html>

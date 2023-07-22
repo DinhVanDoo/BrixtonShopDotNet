@@ -1,0 +1,109 @@
+﻿@using Newtonsoft.Json;
+@using Microsoft.AspNetCore.Session;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Home</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link href="~/css/home.css" rel="stylesheet" />
+    <link href="~/css/productdetail.css" rel="stylesheet" />
+    <link href="~/css/admin.css" rel="stylesheet" />
+    <link href="~/css/shopall.css" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Alegreya&family=MuseoModerno:wght@200;300;400;500;600;800;900&family=Open+Sans:ital,wght@0,300;1,300&display=swap"
+          rel="stylesheet">
+</head>
+<body>
+    <div class="wel">
+        <h6 href=""><strong>Welcome</strong> to our shop</h6>
+
+    </div>
+    <!-- Top navigation -->
+    <div class="topnav">
+
+        <!-- Centered link -->
+        <div class="topnav-centered">
+            <a href="/Home/Home" class="active"
+               style="color: black; font-size: 40px; font-family: 'MuseoModerno', cursive;"><strong>Brixton:</strong></a>
+        </div>
+
+        <!-- Left-aligned links (default) -->
+        <a style="font-family: 'MuseoModerno', cursive;font-size: 20px;" href="/Shop/ShopAll">Shop All</a>
+        
+        <!-- Right-aligned links -->
+
+        <div class="topnav-right" style="justify-content: right; float: right; margin-right: 20px;">
+            <a style="font-size: 10px;margin-left: 5px;" href="../view/cart">
+                <i class="fa fa-shopping-cart" style="font-size:25px; height: fit-content;"></i>
+
+            </a>
+
+            @{
+                string? user = Context.Session.GetString("User");
+                Brixton.Models.AccountModel acc = JsonConvert.DeserializeObject<Brixton.Models.AccountModel>(user);
+                if (!string.IsNullOrEmpty(user))
+                {
+                    
+                    <a>Hello @acc.AccId</a>
+                    <a style="padding-left: 20px; margin-right: 20px ;font-family: 'MuseoModerno', cursive;font-size: 20px;" href="@Url.Action("Logout","Login")">Log out</a>
+                }
+                else
+                {
+
+                    <a style="padding-left: 20px; margin-right: 20px ;font-family: 'MuseoModerno', cursive;font-size: 20px;" href="@Url.Action("Login","Login")">Log in</a>
+                }
+            }
+            
+        </div>
+
+    </div>
+
+    @RenderBody()
+
+
+    <footer class="footer" style="display: flex; justify-content: space-between">
+
+        <div class="left" style="width: 30%; text-align: left; margin: 30px; ">
+            <p style="font-size: 23px;font-weight: bold">Thank you for your interest in our products</p>
+            <p style="font-size: 10px">___________________________________________</p>
+            <p>If you are interested in sound and want to experience the product directly, please contact us </p>
+            <!-- comment -->
+            <p>Address</p>
+            <p>11th floor Keangnam Landmark Tower 72 Area E6, Pham Hung, Ha Noi</p>
+            <p>Phone: 0999999969</p>
+        </div>
+        <div class="right" style="width: 30%; text-align: left ;margin: 30px;font-size: 15px">
+            <p style="width: fit-content">
+                We have a mission to change the look of street fashion but not without politeness and seriousness. The
+                company with many years of experience in the fashion industry has developed products that are creative
+                and stylish.
+            </p>
+            <p>________________________________________</p>
+
+            <div>
+                <a style="color: white" href="${pageContext.request.contextPath}/view/Privacy.jsp">Privacy</a>
+            </div>
+            <div>
+                <a style="color: white" href="${pageContext.request.contextPath}/view/UserSupport.jsp">User Support</a>
+            </div>
+
+            <div style="display: flex; margin-top:10px ">
+                
+
+                <i class="fa fa-instagram fa-fw"></i>
+                <i class="fa fa-twitter fa-fw"></i>
+                <i class="fa fa-google fa-fw"></i>
+                <p></p>
+            </div>
+        </div>
+    </footer>
+
+
+
+
+</body>
+</html>

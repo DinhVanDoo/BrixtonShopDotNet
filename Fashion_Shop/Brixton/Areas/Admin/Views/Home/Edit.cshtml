@@ -1,0 +1,183 @@
+﻿@{
+    ViewData["Title"] = "List";
+    Layout = "~/Areas/Admin/Views/SharedAdmin/_LayoutAdmin.cshtml";
+    Brixton.Models.PRJ301_SE1705Context context = new Brixton.Models.PRJ301_SE1705Context();
+}
+
+@using Brixton.Models
+@model ProductModel
+
+<style>
+    body {
+        font-family: 'Eczar', serif;
+    }
+
+    * {
+        box-sizing: border-box;
+    }
+
+    /* Button used to open the contact form - fixed at the bottom of the page */
+    .open-button {
+        background-color: white;
+        color: black;
+        padding: 16px 20px;
+        border: none;
+        cursor: pointer;
+        opacity: 0.8;
+        bottom: 23px;
+        right: 28px;
+        margin: 0;
+    }
+
+    /* The popup form - hidden by default */
+    .form-popup {
+        display: block;
+        /*                position: fixed;*/
+        margin: auto;
+        width: 50%;
+        border: 3px solid #f1f1f1;
+    }
+
+    /* Add styles to the form container */
+    .form-container {
+        max-width: 100%;
+        padding: 10px;
+        background-color: white;
+    }
+
+        /* Full-width input fields */
+        .form-container input[type=text], .form-container input[type=password] {
+            width: 100%;
+            padding: 15px;
+            margin: 5px 0 22px 0;
+            border: none;
+            background: #f1f1f1;
+        }
+
+            /* When the inputs get focus, do something */
+            .form-container input[type=text]:focus, .form-container input[type=password]:focus {
+                background-color: white;
+                outline: none;
+            }
+
+        /* Set a style for the submit/login button */
+        .form-container .btn {
+            background-color: #003333;
+            color: white;
+            padding: 16px 20px;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            margin-bottom: 10px;
+            opacity: 0.8;
+        }
+
+        /* Add a red background color to the cancel button */
+        .form-container .cancel {
+            background-color: black;
+        }
+
+        /* Add some hover effects to buttons */
+        .form-container .btn:hover, .open-button:hover {
+            opacity: 1;
+        }
+
+    .footer {
+        background-color: black;
+        color: white;
+        margin-top: 20px;
+    }
+
+</style>
+
+
+<div class="form-popup" id="myForm">
+    <p style="color: green">@ViewBag.EditSuccess</p>
+    @using (Html.BeginForm("Edit", "Home", FormMethod.Post, new { id = "Update", @class = "form-container" }))
+    {
+        <h1 style="text-align: center">Update Product</h1>
+        <label for="proName"><b>Product Name</b></label>
+
+        @Html.Hidden("Pid", Model.ProId)
+        @Html.TextBoxFor(model => model.ProName, new { @class = "form-control", id = "Name", placeholder = "Product Name" })
+        @Html.ValidationMessageFor(model => model.ProName, "", new { @class = "text-danger" })
+        <br>
+        <label for="proImg"><b>Product Image</b></label>
+        <input type="file" placeholder="Product Image" name="proImg" required>
+        @Html.ValidationMessageFor(model => model.ProImg, "", new { @class = "text-danger" })
+        <br> <br>
+        <label for="proPrice"><b>Product Price</b></label>
+        @Html.TextBoxFor(model => model.ProPrice, new { @class = "form-control", id = "Price", aria_describedby = "emailHelp" })
+        @Html.ValidationMessageFor(model => model.ProPrice, "", new { @class = "text-danger" })
+        <br>
+        <label for="country">Categories</label>
+
+        <!-- comment -->
+        <select id="country" name="caId" style="margin-right: 30px ">
+            <option selected>Select Category</option>
+            @{
+                foreach (var listCa in context.CategoriesHe161048s.ToList())
+                {
+                    <option value="@listCa.CaId" @(Model.CaId == listCa.CaId ? "selected" : "")>@listCa.CaName</option>
+                }
+            }
+
+
+        </select>
+
+        <label for="country">Collection</label>
+
+        <select id="country" name="coId">
+            <option selected>Select Collections</option>
+            @{
+                foreach (var listCo in context.CollectionsHe161048s.ToList())
+                {
+                    <option value="@listCo.CoId" @(Model.CoId == listCo.CoId ? "selected" : "")>@listCo.CoName</option>
+                }
+            }
+
+        </select> <br>
+
+        <br>
+
+        <label for="proDetail"><b>Product Detail</b></label>
+        @Html.TextAreaFor(model => model.ProDetail, new { @class = "form-control", id = "floatingTextarea", style = "height: 150px;", placeholder = "Leave a Description here" })
+        @Html.ValidationMessageFor(model => model.ProDetail, "", new { @class = "text-danger" })
+
+
+        <button type="submit" class="btn" style="background-color: black">Add</button>
+        <div style="margin:auto"><a type="button" style="text-align: center; margin:auto; width:100%" href="@Url.Action("DashBoard")">Back</a></div>
+
+
+    }
+    @*<form action="add" method="get" class="form-container">
+
+    <input type="text" placeholder="Enter Product Name" name="proName" required>
+
+
+    <input type="file" placeholder="Product Image" name="proImg" required>
+    <br> <br>
+
+
+    <input type="number" placeholder="Product Price" name="proPrice" required min="0" style="border-radius: 10px">
+    <br> <br>
+
+    <select id="country" name="caId" style="margin-right: 30px ">
+    <c:forEach items="${listCategories}" var="o">
+    <option value="${o.caId}">${o.caName}</option>
+    </c:forEach>
+    </select>
+    <label for="country">Collection</label>
+    <select id="country" name="coId">
+    <c:forEach items="${listCollections}" var="o">
+    <option value="${o.coId}">${o.coName}</option>
+    </c:forEach>
+    </select> <br><br>
+
+    <input type="text" placeholder="If you want add new collection, Input, Please..." name="addColection">
+    <label for="proDetail"><b>Product Detail</b></label>
+    <textarea name="proDetail" placeholder="Write something.." style="width: 100%;height:100px"></textarea>
+    <button type="submit" class="btn" style="background-color: black">Add</button>
+    <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+    </form>*@
+</div>

@@ -1,0 +1,39 @@
+﻿@{
+    ViewData["Title"] = "Home";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+
+@using Brixton.Models
+@model List<ProductHe161048>
+
+
+<link href="css/List.css" rel="stylesheet">
+
+<div>
+    <img src="/img/ảnh bìa.jpg"
+         alt="" style="width: 100%;">
+</div>
+
+<div style=" justify-content: center;">
+    <h2 style="text-align: center; margin-top: 20px">NEW PRODUCT</h2>
+    <div class="product">
+        @{
+            foreach (ProductHe161048 list in Model)
+            {
+                <div class="card">
+                    <img src="/@list.ProImg" style="width:100% ">
+                    <a class="title" style="padding: 1px 1px;"> @list.ProName</a>
+                    <p> @list.ProPrice $</p>
+                    <p><button class="buy"><a href="/Product/Detail/@list.ProId" style="color: white">View Detail</a></button></p>
+                </div>
+
+
+            }
+        }
+    </div>
+</div>
+
+
+    
+
